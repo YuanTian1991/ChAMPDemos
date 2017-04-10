@@ -1,8 +1,6 @@
 
 # Demo450K DataSet
 
-@(Diary)[ChAMP]
-
 This 450K data set contains 8 samples, 4 cancer and 4 normal, which is perfect for testing 450K dataset with ChAMP.
 
 ## Code：
