@@ -224,7 +224,21 @@ This data set can not be performed batch correction, because "Slide" factor in p
            8            2            4            1 
 >
 ```
-phenotype 200134080019 contains only one variable, not able to be corrected by Combat algorithm.
+Phenotype 200134080019 contains only one variable, not able to be corrected by Combat algorithm. However, even if we remove phenotype 200134080019 related samples, it's still not working, because Combat function, defined by SVA package and paper, requirs that there MUST NOT have any confounding effect between covariates about to be analysied and batches to be corrected. So to say aftering modeling covariate "Sample_Group" and batch "Slide", the modeled matrix MUST be a Full Rank Matrix.
+
+Now let's make a test below:
+``` r
+> table(myLoad$pd$Sample_Group,myLoad$pd$Slide)
+                    
+                     200134080009 200134080015 200134080018 200134080019
+  CAF                           3            0            0            0
+  Guthrie_card_blood            2            2            0            1
+  LNCaP_cells                   0            0            2            0
+  NAF                           3            0            0            0
+  PrEC_cells                    0            0            2            0
+> 
+```
+Now we can see that in above matrix, column 200134090015 actually can be represented by 200134080019 column. Also, we can see all PrEC_cells samples are 200134080018 column. So to say, "Sample_Group" and "Slide" here are strongly confounded with each other. It's not our program's probem that champ.runCombat() is not working, but actually the data's status is not fulfilled.
 
 ### champ.DMP() Result
 ``` r
